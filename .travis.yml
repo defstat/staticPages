@@ -124,7 +124,7 @@ script:
   - TEST_CONF2="--configuration $TESTS_DIR/phpunit-env2.xml"
   - phpunit='php lib/pkp/lib/vendor/phpunit/phpunit/phpunit'
   - DEBUG="--debug"
-  - $phpunit $TEST_CONF1 --debug -v "plugins/$DRUPAL_TI_SIMPLETEST_GROUP/$DRUPAL_TI_MODULE_NAME/tests/functional"
+  - $phpunit $TEST_CONF1 --debug -v "./plugins/$DRUPAL_TI_SIMPLETEST_GROUP/$DRUPAL_TI_MODULE_NAME/tests/functional/StaticPagesFunctionalTest.php"
 
 #script:
 #  - phpunit "tests/functional/StaticPagesFunctionalTest.php"
