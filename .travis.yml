@@ -97,12 +97,29 @@ install:
   - cd $DRUPAL_TI_MODULE_NAME
   - ls -all
   - git checkout -qf $TRAVIS_COMMIT
+  - cd ../../../lib/pkp && composer update && cd ../..
 
-#before_script:
-#  - drupal-ti before_script
+  # Configure the webserver
+  - ./lib/pkp/tools/travis/prepare-webserver.sh
+
+  # Start xvfb
+  - ./lib/pkp/tools/travis/start-xvfb.sh
+
+  # Start Selenium
+  - ./lib/pkp/tools/travis/start-selenium.sh
+
+  # Prepare code coverage
+  - ./lib/pkp/tools/travis/prepare-code-coverage.sh
+
+  # Sleep and output our logs, to avoid hanging build with no access to
+  # logs. This is useful for debugging but too verbose to leave enabled.
+  # - (sleep 590; cat access.log; cat error.log; cat xvfb-output; cat selenium-output; cat ./lib/pkp/tests/results/error.log) &
 
 script:
-  - phpunit "tests/functional/StaticPagesFunctionalTest.php"
+  - ./lib/pkp/tools/travis/run-tests.sh
+
+#script:
+#  - phpunit "tests/functional/StaticPagesFunctionalTest.php"
 
 notifications:
   email: false
