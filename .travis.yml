@@ -119,7 +119,14 @@ install:
   # - (sleep 590; cat access.log; cat error.log; cat xvfb-output; cat selenium-output; cat ./lib/pkp/tests/results/error.log) &
 
 script:
-  - ./lib/pkp/tools/travis/run-tests.sh
+  - TESTS_DIR=`readlink -f "lib/pkp/tests"`
+
+  # Shortcuts to the test environments.
+  - TEST_CONF1="--configuration $TESTS_DIR/phpunit-env1.xml"
+  - TEST_CONF2="--configuration $TESTS_DIR/phpunit-env2.xml"
+  - phpunit='php lib/pkp/lib/vendor/phpunit/phpunit/phpunit'
+  - DEBUG="--debug"
+  - $phpunit $TEST_CONF1 --debug -v "plugins/$DRUPAL_TI_SIMPLETEST_GROUP/$DRUPAL_TI_MODULE_NAME/tests/functional"
 
 #script:
 #  - phpunit "tests/functional/StaticPagesFunctionalTest.php"
