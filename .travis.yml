@@ -89,13 +89,17 @@ mysql:
 install:
   - mkdir -p "$TRAVIS_BUILD_DIR/../ojs-3"
   - cd "$TRAVIS_BUILD_DIR/../ojs-3"
-  - git clone --depth 1 https://github.com/pkp/ojs.git
+  - git clone --depth 10 https://github.com/pkp/ojs.git
+  - cd "$TRAVIS_BUILD_DIR/../ojs-3/plugins/$DRUPAL_TI_SIMPLETEST_GROUP"
+  - git clone https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
+  - cd $TRAVIS_REPO_SLUG
+  - git checkout -qf $TRAVIS_COMMIT
 
 #before_script:
 #  - drupal-ti before_script
 
 script:
-  - phpunit tests/functional/StaticPagesFunctionalTest.php
+  - phpunit "$TRAVIS_BUILD_DIR/../ojs-3/plugins/$DRUPAL_TI_SIMPLETEST_GROUP/$TRAVIS_REPO_SLUG/tests/functional/StaticPagesFunctionalTest.php"
 
 notifications:
   email: false
