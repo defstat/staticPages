@@ -95,13 +95,14 @@ install:
   - git clone https://github.com/$TRAVIS_REPO_SLUG.git $DRUPAL_TI_MODULE_NAME
   - ls -all
   - cd $DRUPAL_TI_MODULE_NAME
+  - ls -all
   - git checkout -qf $TRAVIS_COMMIT
 
 #before_script:
 #  - drupal-ti before_script
 
 script:
-  - phpunit "$TRAVIS_BUILD_DIR/../ojs-3/plugins/$DRUPAL_TI_SIMPLETEST_GROUP/$TRAVIS_REPO_SLUG/tests/functional/StaticPagesFunctionalTest.php"
+  - phpunit "tests/functional/StaticPagesFunctionalTest.php"
 
 notifications:
   email: false
