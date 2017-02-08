@@ -103,7 +103,7 @@ install:
   - composer update && cd ../..
 
   # Configure the webserver
-   - ./lib/pkp/tools/travis/prepare-webserver.sh
+  - ./lib/pkp/tools/travis/prepare-webserver.sh
 
   # Start xvfb
   - ./lib/pkp/tools/travis/start-xvfb.sh
