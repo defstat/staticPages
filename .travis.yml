@@ -112,11 +112,11 @@ install:
   - ./lib/pkp/tools/travis/start-selenium.sh
 
   # Prepare code coverage
-  - ./lib/pkp/tools/travis/prepare-code-coverage.sh
+  #- ./lib/pkp/tools/travis/prepare-code-coverage.sh
 
   # Sleep and output our logs, to avoid hanging build with no access to
   # logs. This is useful for debugging but too verbose to leave enabled.
-  # - (sleep 590; cat access.log; cat error.log; cat xvfb-output; cat selenium-output; cat ./lib/pkp/tests/results/error.log) &
+  - (sleep 590; cat access.log; cat error.log; cat xvfb-output; cat selenium-output; cat ./lib/pkp/tests/results/error.log) &
 
 script:
   - TESTS_DIR=`readlink -f "lib/pkp/tests"`
