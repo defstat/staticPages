@@ -103,16 +103,16 @@ install:
   - composer update && cd ../..
 
   # Configure the webserver
-  - ./lib/pkp/tools/travis/prepare-webserver.sh
+  # - ./lib/pkp/tools/travis/prepare-webserver.sh
 
   # Start xvfb
-  - ./lib/pkp/tools/travis/start-xvfb.sh
+  # - ./lib/pkp/tools/travis/start-xvfb.sh
 
   # Start Selenium
-  - ./lib/pkp/tools/travis/start-selenium.sh
+  # - ./lib/pkp/tools/travis/start-selenium.sh
 
   # Prepare code coverage
-  - ./lib/pkp/tools/travis/prepare-code-coverage.sh
+  # - ./lib/pkp/tools/travis/prepare-code-coverage.sh
 
   # Sleep and output our logs, to avoid hanging build with no access to
   # logs. This is useful for debugging but too verbose to leave enabled.
