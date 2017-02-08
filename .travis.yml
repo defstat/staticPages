@@ -90,7 +90,7 @@ install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
   - git clone --depth 10 https://github.com/pkp/ojs.git
-  - cd "./ojs-3/plugins/$DRUPAL_TI_SIMPLETEST_GROUP/"
+  - cd "plugins/$DRUPAL_TI_SIMPLETEST_GROUP/"
   - git clone https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
   - cd $TRAVIS_REPO_SLUG
   - git checkout -qf $TRAVIS_COMMIT
