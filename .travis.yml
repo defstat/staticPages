@@ -89,7 +89,7 @@ mysql:
 install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
-  - git clone --depth 10 https://github.com/pkp/ojs.git
+  - git clone --depth 10 --recursive https://github.com/pkp/ojs.git
   - ls -all
   - cd "ojs/plugins/$DRUPAL_TI_SIMPLETEST_GROUP/"
   - git clone https://github.com/$TRAVIS_REPO_SLUG.git $DRUPAL_TI_MODULE_NAME
@@ -97,7 +97,9 @@ install:
   - cd $DRUPAL_TI_MODULE_NAME
   - ls -all
   - git checkout -qf $TRAVIS_COMMIT
-  - cd ../../../lib/pkp && composer update && cd ../..
+  - cd ../../../lib/pkp
+  - ls -all 
+  - composer update && cd ../..
 
   # Configure the webserver
   - ./lib/pkp/tools/travis/prepare-webserver.sh
