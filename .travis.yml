@@ -31,7 +31,7 @@ env:
 
     # Configuration variables.
     - DRUPAL_TI_MODULE_NAME="staticPages"
-    - DRUPAL_TI_SIMPLETEST_GROUP="Generic"
+    - DRUPAL_TI_SIMPLETEST_GROUP="generic"
 
     # Define runners and environment vars to include before and after the
     # main runners / environment vars.
