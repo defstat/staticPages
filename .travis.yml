@@ -92,7 +92,7 @@ install:
   - git clone --depth 10 --recursive https://github.com/pkp/ojs.git
   - ls -all
   - cd "ojs/plugins/$DRUPAL_TI_SIMPLETEST_GROUP/"
-  - rm $DRUPAL_TI_MODULE_NAME
+  - if [ -d "$DRUPAL_TI_MODULE_NAME" ]; then rm -r $DRUPAL_TI_MODULE_NAME; fi
   - git clone https://github.com/$TRAVIS_REPO_SLUG.git $DRUPAL_TI_MODULE_NAME
   - ls -all
   - cd $DRUPAL_TI_MODULE_NAME
