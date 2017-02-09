@@ -69,10 +69,13 @@ install:
 
   # Install the JS linter
   #- if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
+  - cd ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis
+  - ls -all
+  - cd ../../../../..
   - ls -all
 script:
-  - if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi else if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi fi
-  #- if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi
+  #- if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi else if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi fi
+  - if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi
   - if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/validate-xml.sh && ./lib/pkp/tools/buildjs.sh; fi
   #- if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi
   #- if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/validate-xml.sh && ./lib/pkp/tools/buildjs.sh; fi
