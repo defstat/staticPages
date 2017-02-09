@@ -39,7 +39,7 @@ before_install:
   - ls -all
   - cd $PKP_PLUGIN_NAME
   - ls -all
-  - git checkout -qf $TRAVIS_COMMIT
+  - git checkout $TRAVIS_BRANCH
 
 install:
   - cd ../../../
