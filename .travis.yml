@@ -1,134 +1,87 @@
 # @file
-# .travis.yml - Drupal for Travis CI Integration
-#
-# Template provided by https://github.com/LionsAd/drupal_ti.
-#
-# Based for simpletest upon:
-#   https://github.com/sonnym/travis-ci-drupal-module-example
+# .travis.yml - PKP Plugins Integration
 
+env:
+  matrix:
+  - TEST=validation
+  - TEST=pgsql
+  - TEST=mysql
+  global:
+  - PKP_PLUGIN_NAME="staticPages"
+  - PKP_PLUGIN_CATEGORY="generic"
+  - PKP_ENVIRONMENT="ojs3.0.x"
+  - secure: "nxosaZUBRaYhk8+LHaDnVgMIveiK4zewiXW5Fw5TtB/D6V67oASufil1uhcayyzIBwnrZZmrFPLhXm0Lm1RiQHrsftffcMB5JlWK9R9EyWpyd87ewqWy3kXBAvsXXTU6ihGiaFpklhVCKt7XcDSR8bWEb2NVWrM7JS7dHDKMwaA="
+  
 language: php
 
 sudo: required
 
 php:
-  # - 5.3
-  # - 5.4
-  # - 5.5
+  #- 5.3
   - 5.6
-  # - 7
-  # - hhvm
+python:
+  - 3.3
+addons:
+  postgresql: "9.1"
+git:
+  # We have to init submodules ourselves to make it recursive
+  submodules: false
 
-matrix:
-  fast_finish: true
-  # allow_failures:
-    # - php: hhvm
-
-env:
-  global:
-    # add composer's global bin directory to the path
-    # see: https://github.com/drush-ops/drush#install---composer
-    - PATH="$PATH:$HOME/.composer/vendor/bin"
-
-    # Configuration variables.
-    - DRUPAL_TI_MODULE_NAME="staticPages"
-    - DRUPAL_TI_SIMPLETEST_GROUP="generic"
-
-    # Define runners and environment vars to include before and after the
-    # main runners / environment vars.
-    #- DRUPAL_TI_SCRIPT_DIR_BEFORE="./drupal_ti/before"
-    #- DRUPAL_TI_SCRIPT_DIR_AFTER="./drupal_ti/after"
-
-    # The environment to use, supported are: drupal-7, drupal-8
-    - DRUPAL_TI_ENVIRONMENT="ojs3.0.x"
-
-    # The installation profile to use:
-    #- DRUPAL_TI_INSTALL_PROFILE="testing"
-
-    # Drupal specific variables.
-    - DRUPAL_TI_DB="ojs_travis_db"
-    - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/ojs_travis_db"
-    # Note: Do not add a trailing slash here.
-    - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
-    - DRUPAL_TI_WEBSERVER_PORT="8080"
-
-    # Simpletest specific commandline arguments, the DRUPAL_TI_SIMPLETEST_GROUP is appended at the end.
-    - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT"
-
-    # PHPUnit specific commandline arguments.
-    - DRUPAL_TI_PHPUNIT_ARGS=""
-    # Specifying the phpunit-core src/ directory is useful when e.g. a vendor/
-    # directory is present in the module directory, which phpunit would then
-    # try to find tests in. This option is relative to $TRAVIS_BUILD_DIR.
-    #- DRUPAL_TI_PHPUNIT_CORE_SRC_DIRECTORY="./tests/src"
-
-    # Code coverage via coveralls.io
-    # - DRUPAL_TI_COVERAGE="satooshi/php-coveralls:0.6.*"
-    # This needs to match your .coveralls.yml file.
-    # - DRUPAL_TI_COVERAGE_FILE="build/logs/clover.xml"
-
-    # Debug options
-    #- DRUPAL_TI_DEBUG="-x -v"
-    # Set to "all" to output all files, set to e.g. "xvfb selenium" or "selenium",
-    # etc. to only output those channels.
-    #- DRUPAL_TI_DEBUG_FILE_OUTPUT="selenium xvfb webserver"
-
-  matrix:
-    # [[[ SELECT ANY OR MORE OPTIONS ]]]
-    # - DRUPAL_TI_RUNNERS="phpunit"
-    #- DRUPAL_TI_RUNNERS="simpletest"
-    #- DRUPAL_TI_RUNNERS="behat"
-    #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
-    # Use phpunit-core to test modules with phpunit with Drupal 8 core.
-    #- DRUPAL_TI_RUNNERS="phpunit-core"
-
-mysql:
-  database: ojs_travis_db
-  username: root
-  encoding: utf8
-
-install:
+before_install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
   - git clone --depth 10 --recursive https://github.com/pkp/ojs.git
   - ls -all
-  - cd "ojs/plugins/$DRUPAL_TI_SIMPLETEST_GROUP/"
-  - if [ -d "$DRUPAL_TI_MODULE_NAME" ]; then rm -r $DRUPAL_TI_MODULE_NAME; fi
-  - git clone https://github.com/$TRAVIS_REPO_SLUG.git $DRUPAL_TI_MODULE_NAME
+  - cd "ojs/plugins/$PKP_PLUGIN_CATEGORY/"
+  - if [ -d "$PKP_PLUGIN_NAME" ]; then rm -r $PKP_PLUGIN_NAME; fi
+  - git clone https://github.com/$TRAVIS_REPO_SLUG.git $PKP_PLUGIN_NAME
   - ls -all
-  - cd $DRUPAL_TI_MODULE_NAME
+  - cd $PKP_PLUGIN_NAME
   - ls -all
   - git checkout -qf $TRAVIS_COMMIT
-  - cd ../../../lib/pkp
-  - ls -all 
+
+install:
+  - cd ../../../lib/pkp 
+
+  # Start submodules
+  - ./tools/startSubmodulesTRAVIS.sh
+
+  # Install composer dependencies
   - composer update && cd ../..
 
   # Configure the webserver
-  - ./lib/pkp/tools/travis/prepare-webserver.sh
+  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/prepare-webserver.sh; fi
 
   # Start xvfb
-  - ./lib/pkp/tools/travis/start-xvfb.sh
+  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-xvfb.sh; fi
 
   # Start Selenium
-  - ./lib/pkp/tools/travis/start-selenium.sh
+  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-selenium.sh; fi
 
   # Prepare code coverage
-  #- ./lib/pkp/tools/travis/prepare-code-coverage.sh
+  - if [[ "$TEST" == "mysql" ]]; then ./lib/pkp/tools/travis/prepare-code-coverage.sh; fi
 
-  # Sleep and output our logs, to avoid hanging build with no access to
-  # logs. This is useful for debugging but too verbose to leave enabled.
-  - (sleep 590; cat access.log; cat error.log; cat xvfb-output; cat selenium-output; cat ./lib/pkp/tests/results/error.log) &
+  # Install the JS linter
+  - if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
 
 script:
-  - ./lib/pkp/tools/travis/run-tests.sh
-  #- TESTS_DIR=`readlink -f "lib/pkp/tests"`
-  #- TEST_CONF1="--configuration $TESTS_DIR/phpunit-env1.xml"
-  #- TEST_CONF2="--configuration $TESTS_DIR/phpunit-env2.xml"
-  #- phpunit='php lib/pkp/lib/vendor/phpunit/phpunit/phpunit'
-  #- DEBUG="--debug"
-  #- $phpunit $TEST_CONF1 --debug -v "./plugins/$DRUPAL_TI_SIMPLETEST_GROUP/$DRUPAL_TI_MODULE_NAME/tests/functional/StaticPagesFunctionalTest.php"
+  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi
+  - if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/validate-xml.sh && ./lib/pkp/tools/buildjs.sh; fi
 
-#script:
-#  - phpunit "tests/functional/StaticPagesFunctionalTest.php"
+after_script:
+  # Merge the coverage reports into one HTML report and upload to http://pkp.sfu.ca/test-coverage 
+  - if [[ "$TEST" == "mysql" ]]; then ./lib/pkp/tools/travis/post-code-coverage.sh; fi
+
+  # Upload the completed database to the PKP server for other uses
+  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/post-data-build.sh; fi
+
+  # Print logs and outputs for debugging.
+  # - cat access.log
+  - cat error.log
+  # - cat xvfb-output
+  # - cat selenium-output
+  - cat ./lib/pkp/tests/results/error.log
+  - for f in lib/pkp/tests/results/*.png; do echo ============== START ${f} ================== ; cat $f | base64 ; echo ============== END ${f} ================== ; done
 
 notifications:
   email: false
