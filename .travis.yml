@@ -41,11 +41,13 @@ before_install:
   - git checkout -qf $TRAVIS_COMMIT
 
 install:
-  - cd ../../../lib/pkp 
+  - cd ../../../
 
   # Start submodules
   - ./tools/startSubmodulesTRAVIS.sh
 
+  - cd ../../../lib/pkp 
+  
   # Install composer dependencies
   - composer update && cd ../..
 
