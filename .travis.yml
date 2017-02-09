@@ -7,7 +7,7 @@ env:
   #- TEST=pgsql
   - TEST=mysql
   global:
-  - TEST_CURRENT_PKP_PLUGIN="1"
+  - TEST_CURRENT_PKP_PLUGIN="0"
   - PKP_PLUGIN_NAME="staticPages"
   - PKP_PLUGIN_CATEGORY="generic"
   - PKP_ENVIRONMENT="ojs-stable-3_0_1"
@@ -75,8 +75,8 @@ install:
   #- if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
   
 script:
-  #- if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi else if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi fi
-  - if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi
+  - if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi else if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi fi
+  #- if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi
   - if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/validate-xml.sh && ./lib/pkp/tools/buildjs.sh; fi
   #- if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi
   #- if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/validate-xml.sh && ./lib/pkp/tools/buildjs.sh; fi
