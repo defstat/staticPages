@@ -10,7 +10,7 @@ env:
   - TEST_CURRENT_PKP_PLUGIN=1
   - PKP_PLUGIN_NAME="staticPages"
   - PKP_PLUGIN_CATEGORY="generic"
-  - PKP_ENVIRONMENT="ojs3.0.x"
+  - PKP_ENVIRONMENT="ojs-stable-3_0_1"
   - secure: "nxosaZUBRaYhk8+LHaDnVgMIveiK4zewiXW5Fw5TtB/D6V67oASufil1uhcayyzIBwnrZZmrFPLhXm0Lm1RiQHrsftffcMB5JlWK9R9EyWpyd87ewqWy3kXBAvsXXTU6ihGiaFpklhVCKt7XcDSR8bWEb2NVWrM7JS7dHDKMwaA="
   
 language: php
@@ -31,7 +31,7 @@ git:
 before_install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
-  - git clone --depth 10 --recursive https://github.com/pkp/ojs.git
+  - git clone --depth 10 --recursive -b $PKP_ENVIRONMENT https://github.com/pkp/ojs.git
   #- cd $PKP_PLUGIN_NAME
   #- ls -all
   #- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH"
@@ -40,7 +40,8 @@ before_install:
 
 install:
   #- cd ../../..
-  - cd ../..
+  #- cd ../..
+  - cd ojs
 
   # Start submodules
   - ./tools/startSubmodulesTRAVIS.sh
