@@ -46,7 +46,7 @@ install:
   # Start submodules
   - ./tools/startSubmodulesTRAVIS.sh
 
-  - cd ../../../lib/pkp 
+  - cd ./lib/pkp 
 
   # Install composer dependencies
   - composer update && cd ../..
