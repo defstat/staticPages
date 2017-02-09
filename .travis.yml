@@ -32,10 +32,6 @@ before_install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
   - git clone --depth 10 --recursive https://github.com/pkp/ojs.git
-  - cd "ojs/plugins/$PKP_PLUGIN_CATEGORY/"
-  - if [ -d "$PKP_PLUGIN_NAME" ]; then rm -r $PKP_PLUGIN_NAME; fi
-  - git clone -b $TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $PKP_PLUGIN_NAME
-  - ls -all
   #- cd $PKP_PLUGIN_NAME
   #- ls -all
   #- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH"
@@ -69,7 +65,15 @@ install:
 
   # Install the JS linter
   #- if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
-  - cd ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis
+  - ls -all
+  - cd "./plugins/$PKP_PLUGIN_CATEGORY/"
+  - if [ -d "$PKP_PLUGIN_NAME" ]; then rm -r $PKP_PLUGIN_NAME; fi
+  - git clone -b $TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $PKP_PLUGIN_NAME
+  - cd $PKP_PLUGIN_NAME
+  - ls -all
+  - cd tools
+  - ls -all
+  - cd travis
   - ls -all
   - cd ../../../../..
   - ls -all
