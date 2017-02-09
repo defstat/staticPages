@@ -52,7 +52,7 @@ if [[ "$TEST" == "mysql" ]]; then
     if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then
         echo "====================WE ARE USING THE PLUGINS RUN_TEST===================="
         ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -m
-    else
+    #else
         #./lib/pkp/tools/runAllTests.sh -bH
     fi
 else
