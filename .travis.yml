@@ -32,19 +32,19 @@ before_install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
   - git clone --depth 10 --recursive https://github.com/pkp/ojs.git
-  - ls -all
   - cd "ojs/plugins/$PKP_PLUGIN_CATEGORY/"
   - if [ -d "$PKP_PLUGIN_NAME" ]; then rm -r $PKP_PLUGIN_NAME; fi
-  - git clone https://github.com/$TRAVIS_REPO_SLUG.git $PKP_PLUGIN_NAME
+  - git clone -b $TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $PKP_PLUGIN_NAME
   - ls -all
-  - cd $PKP_PLUGIN_NAME
-  - ls -all
-  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH"
-  - git checkout $TRAVIS_BRANCH
-  - ls -all
+  #- cd $PKP_PLUGIN_NAME
+  #- ls -all
+  #- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH"
+  #- git checkout $TRAVIS_BRANCH
+  #- ls -all
 
 install:
-  - cd ../../../
+  #- cd ../../..
+  - cd ../..
 
   # Start submodules
   - ./tools/startSubmodulesTRAVIS.sh
@@ -52,23 +52,24 @@ install:
   - cd ./lib/pkp 
 
   # Install composer dependencies
-  - composer update && cd ../..
+  - composer update 
+  - cd ../..
 
   # Configure the webserver
-  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/prepare-webserver.sh; fi
+  #- if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/prepare-webserver.sh; fi
 
   # Start xvfb
-  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-xvfb.sh; fi
+  #- if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-xvfb.sh; fi
 
   # Start Selenium
-  - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-selenium.sh; fi
+  #- if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-selenium.sh; fi
 
   # Prepare code coverage
   #- if [[ "$TEST" == "mysql" ]]; then ./lib/pkp/tools/travis/prepare-code-coverage.sh; fi
 
   # Install the JS linter
-  - if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
-
+  #- if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
+  - ls -all
 script:
   - if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi else if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/run-tests.sh; fi fi
   #- if [[ "$TEST" != "validation" ]]; then ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/run-tests.sh; fi
