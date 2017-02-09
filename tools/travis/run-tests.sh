@@ -49,10 +49,11 @@ mkdir ${FILESDIR}
 
 # Run data build suite
 if [[ "$TEST" == "mysql" ]]; then
-    if [["$TEST_CURRENT_PKP_PLUGIN" -eq 1]]; then
+    if [ \( "$TEST_CURRENT_PKP_PLUGIN" -eq 1 \) ]; then
+        echo "====================WE ARE USING THE PLUGINS RUN_TEST===================="
         ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -m
     else
-        ./lib/pkp/tools/runAllTests.sh -bH
+        #./lib/pkp/tools/runAllTests.sh -bH
     fi
 else
 	./lib/pkp/tools/runAllTests.sh -b
@@ -68,7 +69,7 @@ fi
 # Run test suite.
 sudo rm -f cache/*.php
 if [[ "$TEST" == "mysql" ]]; then
-	./lib/pkp/tools/runAllTests.sh -CcPpfH
+	#./lib/pkp/tools/runAllTests.sh -CcPpfH
 else
-	./lib/pkp/tools/runAllTests.sh -CcPpf
+	#./lib/pkp/tools/runAllTests.sh -CcPpf
 fi
