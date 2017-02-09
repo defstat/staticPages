@@ -61,7 +61,7 @@ install:
   - if [[ "$TEST" != "validation" ]]; then ./lib/pkp/tools/travis/start-selenium.sh; fi
 
   # Prepare code coverage
-  - if [[ "$TEST" == "mysql" ]]; then ./lib/pkp/tools/travis/prepare-code-coverage.sh; fi
+  #- if [[ "$TEST" == "mysql" ]]; then ./lib/pkp/tools/travis/prepare-code-coverage.sh; fi
 
   # Install the JS linter
   - if [[ "$TEST" == "validation" ]]; then ./lib/pkp/tools/travis/install-linter.sh; fi
