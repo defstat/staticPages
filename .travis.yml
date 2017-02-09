@@ -3,8 +3,8 @@
 
 env:
   matrix:
-  - TEST=validation
-  - TEST=pgsql
+  #- TEST=validation
+  #- TEST=pgsql
   - TEST=mysql
   global:
   - PKP_PLUGIN_NAME="staticPages"
@@ -47,7 +47,7 @@ install:
   - ./tools/startSubmodulesTRAVIS.sh
 
   - cd ../../../lib/pkp 
-  
+
   # Install composer dependencies
   - composer update && cd ../..
 
