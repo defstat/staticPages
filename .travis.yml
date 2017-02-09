@@ -7,7 +7,7 @@ env:
   #- TEST=pgsql
   - TEST=mysql
   global:
-  - TEST_CURRENT_PKP_PLUGIN=1
+  - TEST_CURRENT_PKP_PLUGIN="1"
   - PKP_PLUGIN_NAME="staticPages"
   - PKP_PLUGIN_CATEGORY="generic"
   - PKP_ENVIRONMENT="ojs-stable-3_0_1"
