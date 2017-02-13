@@ -35,11 +35,12 @@ before_install:
   - cd .. 
   - git clone -b $TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
   - PKP_PLUGIN_NAME=($(grep -oP '(?<=application>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml"))
-  - PKP_PLUGIN_CATEGORY_H=($(grep -oP '(?<=type>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml"))
+  - PKP_PLUGIN_CATEGORY=($(grep -oP '(?<=type>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml"))
   - echo $PKP_PLUGIN_NAME
-  - category=$(echo $PKP_PLUGIN_CATEGORY_H | grep -o '[^-]*$')
-  - PKP_PLUGIN_CATEGORY=$(echo $version | cut -d. -f2)
   - echo $PKP_PLUGIN_CATEGORY
+  # - category=$(echo $PKP_PLUGIN_CATEGORY_H | grep -o '[^-]*$')
+  # - PKP_PLUGIN_CATEGORY=$(echo $version | cut -d. -f2)
+  
   #- cd $PKP_PLUGIN_NAME
   #- ls -all
   #- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH"
