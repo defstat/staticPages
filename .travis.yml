@@ -39,7 +39,7 @@ before_install:
   - echo $PKP_PLUGIN_NAME
   - echo $PKP_PLUGIN_CATEGORY_H
   - category=$(echo $PKP_PLUGIN_CATEGORY_H | grep -o '[^-]*$')
-  - PKP_PLUGIN_CATEGORY=$(echo $version | cut -d. -f2)
+  - PKP_PLUGIN_CATEGORY=$(echo $category | cut -d. -f2)
   - echo $PKP_PLUGIN_CATEGORY
   
   #- cd $PKP_PLUGIN_NAME
