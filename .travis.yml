@@ -3,8 +3,8 @@
 
 env:
   matrix:
-  #- TEST=validation
-  #- TEST=pgsql
+  - TEST=validation
+  - TEST=pgsql
   - TEST=mysql
   global:
   - TEST_CURRENT_PKP_PLUGIN="1"
