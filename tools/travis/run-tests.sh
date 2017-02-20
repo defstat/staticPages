@@ -22,6 +22,7 @@ export FILESDIR=files
 export DATABASEDUMP=~/database.sql.gz
 
 export PKP_PLUGIN_NAME=($(grep -oP '(?<=application>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml"))
+echo PKP_PLUGIN_NAME
 
 # Install required software
 sudo apt-get install a2ps libbiblio-citation-parser-perl libhtml-parser-perl
