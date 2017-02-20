@@ -167,7 +167,7 @@ phpunit='php lib/pkp/lib/vendor/phpunit/phpunit/phpunit'
 REPORT_SWITCH=''
 REPORT_TMP="$TESTS_DIR/results/coverage-tmp"
 if [ \( "$DO_ONLY_CURRENT_PLUGIN" -eq 1 \) ]; then
-	$phpunit $DEBUG $TEST_CONF1 --debug -v --stop-on-failure --stop-on-skipped $REPORT_SWITCH plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tests
+	$phpunit $DEBUG $TEST_CONF1 --debug -v --stop-on-failure --stop-on-skipped $REPORT_SWITCH plugins/$PKP_PLUGIN_CATEGORY/staticPages/tests
 fi
 
 if [ \( "$DO_ALL" -eq 1 \) -o \( "$DO_APP_DATA" -eq 1 \) ]; then
