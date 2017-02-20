@@ -15,9 +15,9 @@ export DUMMY_PDF=~/dummy.pdf
 export DUMMY_ZIP=~/dummy.zip
 export BASEURL="http://localhost"
 export DBHOST=localhost
-export DBNAME=ojs-ci
-export DBUSERNAME=ojs-ci
-export DBPASSWORD=ojs-ci
+export DBNAME=ojs
+export DBUSERNAME=ojs
+export DBPASSWORD=ojs
 export FILESDIR=files
 export DATABASEDUMP=~/database.sql.gz
 
@@ -40,8 +40,8 @@ if [[ "$TEST" == "pgsql" ]]; then
 	chmod 600 ~/.pgpass
 	export DBTYPE=PostgreSQL
 elif [[ "$TEST" == "mysql" ]]; then
-	mysql -u root -e 'CREATE DATABASE `ojs-ci` DEFAULT CHARACTER SET utf8'
-	mysql -u root -e "GRANT ALL ON \`ojs-ci\`.* TO \`ojs-ci\`@localhost IDENTIFIED BY 'ojs-ci'"
+	mysql -u root -e 'CREATE DATABASE `ojs` DEFAULT CHARACTER SET utf8'
+	mysql -u root -e "GRANT ALL ON \`ojs\`.* TO \`ojs\`@localhost IDENTIFIED BY 'ojs'"
 	export DBTYPE=MySQL
 fi
 
@@ -49,9 +49,9 @@ fi
 cp config.TEMPLATE.inc.php config.inc.php
 sed -i -e "s/enable_cdn = On/enable_cdn = Off/" config.inc.php # Disable CDN use
 if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then
-    sed -i -e "s/username = ojs/username = ojs-ci/" config.inc.php # Installed On
-    sed -i -e "s/password = ojs/password = ojs-ci/" config.inc.php # Installed On
-    sed -i -e "s/name = ojs/name = ojs-ci/" config.inc.php # Installed On
+    #sed -i -e "s/username = ojs/username = ojs-ci/" config.inc.php # Installed On
+    #sed -i -e "s/password = ojs/password = ojs-ci/" config.inc.php # Installed On
+    #sed -i -e "s/name = ojs/name = ojs-ci/" config.inc.php # Installed On
     sed -i -e "s/installed = Off/installed = On/" config.inc.php # Installed On
 fi
 mkdir ${FILESDIR}
