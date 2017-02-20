@@ -52,9 +52,9 @@ mkdir ${FILESDIR}
 
 # Run data build suite
 if [[ "$TEST" == "mysql" ]]; then
-    ./lib/pkp/tools/runAllTests.sh -bH
+    ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -bH
 else
-	./lib/pkp/tools/runAllTests.sh -b
+	./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -b
 fi
 
 # Dump the completed database.
@@ -71,9 +71,9 @@ if [[ "$TEST" == "mysql" ]]; then
         #echo "====================WE ARE USING THE PLUGINS RUN_TEST===================="
         ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -m
     else
-        ./lib/pkp/tools/runAllTests.sh -CcPpfH
+        ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -CcPpfH
     fi
 	#./lib/pkp/tools/runAllTests.sh -CcPpfH
 else
-	./lib/pkp/tools/runAllTests.sh -CcPpf
+	./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -CcPpf
 fi
