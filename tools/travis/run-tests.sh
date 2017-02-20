@@ -48,12 +48,12 @@ fi
 # Prep files
 cp config.TEMPLATE.inc.php config.inc.php
 sed -i -e "s/enable_cdn = On/enable_cdn = Off/" config.inc.php # Disable CDN use
-if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then
+#if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then
     #sed -i -e "s/username = ojs/username = ojs-ci/" config.inc.php # Installed On
     #sed -i -e "s/password = ojs/password = ojs-ci/" config.inc.php # Installed On
     #sed -i -e "s/name = ojs/name = ojs-ci/" config.inc.php # Installed On
     #sed -i -e "s/installed = Off/installed = On/" config.inc.php # Installed On
-fi
+#fi
 mkdir ${FILESDIR}
 
 # Run data build suite
