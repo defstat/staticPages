@@ -75,5 +75,5 @@ if [[ "$TEST" == "mysql" ]]; then
     fi
 	#./lib/pkp/tools/runAllTests.sh -CcPpfH
 else
-	#./lib/pkp/tools/runAllTests.sh -CcPpf
+	./lib/pkp/tools/runAllTests.sh -CcPpf
 fi
