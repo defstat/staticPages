@@ -22,7 +22,7 @@ export FILESDIR=files
 export DATABASEDUMP=~/database.sql.gz
 
 export PKP_PLUGIN_NAME=($(grep -oP '(?<=application>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml"))
-echo PKP_PLUGIN_NAME
+echo $PKP_PLUGIN_NAME
 
 # Install required software
 sudo apt-get install a2ps libbiblio-citation-parser-perl libhtml-parser-perl
@@ -55,7 +55,7 @@ mkdir ${FILESDIR}
 
 # Run data build suite
 if [[ "$TEST" == "mysql" ]]; then
-    ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -bH
+    ./plugins/$PKP_PLUGIN_CATEGORY/staticPages/tools/travis/runAllTests.sh -bH
 else
 	./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -b
 fi
