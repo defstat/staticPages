@@ -21,6 +21,8 @@ export DBPASSWORD=ojs-ci
 export FILESDIR=files
 export DATABASEDUMP=~/database.sql.gz
 
+export PKP_PLUGIN_NAME=($(grep -oP '(?<=application>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml"))
+
 # Install required software
 sudo apt-get install a2ps libbiblio-citation-parser-perl libhtml-parser-perl
 
@@ -54,7 +56,7 @@ mkdir ${FILESDIR}
 if [[ "$TEST" == "mysql" ]]; then
     ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -bH
 else
-	"./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -b"
+	./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -b
 fi
 
 # Dump the completed database.
