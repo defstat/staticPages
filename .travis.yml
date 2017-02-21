@@ -2,16 +2,20 @@
 # .travis.yml - PKP Plugins Integration
 
 env:
-  - PKP_ENVIRONMENT="ojs-stable-3_0_1"
-  - PKP_ENVIRONMENT="ojs-stable-3_0_2"
+  - 
+  - 
   matrix:
-  #- TEST=validation
+  - TEST=validation
   - TEST=pgsql
   - TEST=mysql
+  - PKP_ENVIRONMENT="ojs-stable-3_0_1"
+  - PKP_ENVIRONMENT="ojs-stable-3_0_2"
   global:
   - TEST_CURRENT_PKP_PLUGIN="1"
   - PKP_PLUGIN_CATEGORY=""
   - PKP_PLUGIN_NAME=""
+  - PKP_OJS_GIT_URL="https://github.com/pkp/ojs.git"
+  - PKP_OMP_GIT_URL="https://github.com/pkp/omp.git"
   - secure: "nxosaZUBRaYhk8+LHaDnVgMIveiK4zewiXW5Fw5TtB/D6V67oASufil1uhcayyzIBwnrZZmrFPLhXm0Lm1RiQHrsftffcMB5JlWK9R9EyWpyd87ewqWy3kXBAvsXXTU6ihGiaFpklhVCKt7XcDSR8bWEb2NVWrM7JS7dHDKMwaA="
   
 language: php
@@ -32,7 +36,7 @@ git:
 before_install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
-  - git clone --depth 10 --recursive -b $PKP_ENVIRONMENT https://github.com/pkp/ojs.git
+  - git clone --depth 10 --recursive -b $PKP_ENVIRONMENT $PKP_OJS_GIT_URL
   - git clone -b $TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
   - PKP_PLUGIN_NAME=$(grep -oP '(?<=application>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml")
   - PKP_PLUGIN_CATEGORY_H=$(grep -oP '(?<=type>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml")
