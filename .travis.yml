@@ -34,7 +34,7 @@ git:
 before_install:
   - mkdir -p "./ojs-3"
   - cd "./ojs-3/"
-  - git clone --depth 10 --recursive -b $PKP_ENVIRONMENT_OJS $PKP_OJS_GIT_URL
+  - git clone --depth 10 --recursive -b $PKP_ENVIRONMENT_OJS --single-branch $PKP_OJS_GIT_URL
   - git clone -b $TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
   - PKP_PLUGIN_NAME=$(grep -oP '(?<=application>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml")
   - PKP_PLUGIN_CATEGORY_H=$(grep -oP '(?<=type>)[^<]+' "./$TRAVIS_REPO_SLUG/version.xml")
