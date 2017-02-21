@@ -8,8 +8,8 @@ env:
   - TEST=mysql
   global:
   - TEST_CURRENT_PKP_PLUGIN="1"
-  - PKP_PLUGIN_NAME=""
-  - PKP_PLUGIN_CATEGORY=""
+  #- PKP_PLUGIN_NAME=""
+  #- PKP_PLUGIN_CATEGORY=""
   - PKP_ENVIRONMENT="ojs-stable-3_0_1"
   - secure: "nxosaZUBRaYhk8+LHaDnVgMIveiK4zewiXW5Fw5TtB/D6V67oASufil1uhcayyzIBwnrZZmrFPLhXm0Lm1RiQHrsftffcMB5JlWK9R9EyWpyd87ewqWy3kXBAvsXXTU6ihGiaFpklhVCKt7XcDSR8bWEb2NVWrM7JS7dHDKMwaA="
   
@@ -40,16 +40,8 @@ before_install:
   - category=$(echo $PKP_PLUGIN_CATEGORY_H | grep -o '[^-]*$')
   - PKP_PLUGIN_CATEGORY=$(echo $category | cut -d. -f2)
   - echo $PKP_PLUGIN_CATEGORY
-  
-  #- cd $PKP_PLUGIN_NAME
-  #- ls -all
-  #- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH"
-  #- git checkout $TRAVIS_BRANCH
-  #- ls -all
 
 install:
-  #- cd ../../..
-  #- cd ../..
   - cd ojs
 
   # Start submodules

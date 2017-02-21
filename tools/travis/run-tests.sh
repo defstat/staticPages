@@ -33,10 +33,10 @@ zip ${DUMMY_ZIP} ${DUMMY_PDF} # Zip format; add PDF dummy as contents
 
 # Create the database.
 if [[ "$TEST" == "pgsql" ]]; then
-	psql -c "CREATE DATABASE \"ojs-ci\";" -U postgres
-	psql -c "CREATE USER \"ojs-ci\" WITH PASSWORD 'ojs-ci';" -U postgres
-	psql -c "GRANT ALL PRIVILEGES ON DATABASE \"ojs-ci\" TO \"ojs-ci\";" -U postgres
-	echo "localhost:5432:ojs-ci:ojs-ci:ojs-ci" > ~/.pgpass
+	psql -c "CREATE DATABASE \"ojs\";" -U postgres
+	psql -c "CREATE USER \"ojs\" WITH PASSWORD 'ojs';" -U postgres
+	psql -c "GRANT ALL PRIVILEGES ON DATABASE \"ojs\" TO \"ojs\";" -U postgres
+	echo "localhost:5432:ojs:ojs:ojs" > ~/.pgpass
 	chmod 600 ~/.pgpass
 	export DBTYPE=PostgreSQL
 elif [[ "$TEST" == "mysql" ]]; then
@@ -48,17 +48,12 @@ fi
 # Prep files
 cp config.TEMPLATE.inc.php config.inc.php
 sed -i -e "s/enable_cdn = On/enable_cdn = Off/" config.inc.php # Disable CDN use
-#if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then
-    #sed -i -e "s/username = ojs/username = ojs-ci/" config.inc.php # Installed On
-    #sed -i -e "s/password = ojs/password = ojs-ci/" config.inc.php # Installed On
-    #sed -i -e "s/name = ojs/name = ojs-ci/" config.inc.php # Installed On
-    #sed -i -e "s/installed = Off/installed = On/" config.inc.php # Installed On
-#fi
+
 mkdir ${FILESDIR}
 
 # Run data build suite
 if [[ "$TEST" == "mysql" ]]; then
-    ./plugins/$PKP_PLUGIN_CATEGORY/staticPages/tools/travis/runAllTests.sh -bH
+    ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -bH
 else
 	./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -b
 fi
@@ -74,12 +69,11 @@ fi
 sudo rm -f cache/*.php
 if [[ "$TEST" == "mysql" ]]; then
     if [[ "$TEST_CURRENT_PKP_PLUGIN" == "1" ]]; then
-        #echo "====================WE ARE USING THE PLUGINS RUN_TEST===================="
-        ./plugins/$PKP_PLUGIN_CATEGORY/staticPages/tools/travis/runAllTests.sh -m
+        echo "====================WE ARE USING THE PLUGINS RUN_TEST===================="
+        ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -m
     else
         ./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -CcPpfH
     fi
-	#./lib/pkp/tools/runAllTests.sh -CcPpfH
 else
 	./plugins/$PKP_PLUGIN_CATEGORY/$PKP_PLUGIN_NAME/tools/travis/runAllTests.sh -CcPpf
 fi
