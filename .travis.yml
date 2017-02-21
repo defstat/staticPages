@@ -20,9 +20,6 @@ language: php
 
 sudo: required
 
-ojs:
-  - ojs-stable-3_0_1
-  - ojs-stable-3_0_2
 php:
   - 5.3
   - 5.6
