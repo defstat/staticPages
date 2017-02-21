@@ -2,8 +2,6 @@
 # .travis.yml - PKP Plugins Integration
 
 env:
-  - 
-  - 
   matrix:
   - TEST=validation
   - TEST=pgsql
